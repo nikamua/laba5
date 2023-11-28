@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода</title>
+</head>
+<body>
+
+<button onclick="getWeather()">Отримати погоду</button>
+<div id="weatherInfo"></div>
+
+<script>
+    async function getWeather() {
+    const apiKey = 'bc862835298c7084a8cdb090e88e22c6'; 
+    const cityName = 'London'; 
+
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`);
+        const data = await response.json();
+
+        const temperature = data.main.temp;
+        const humidity = data.main.humidity;
+        const windSpeed = data.wind.speed;
+
+        const weatherInfoElement = document.getElementById('weatherInfo');
+        weatherInfoElement.innerHTML = `
+            <p>Температура: ${temperature}K</p>
+            <p>Вологість: ${humidity}%</p>
+            <p>Швидкість вітру: ${windSpeed} м/с</p>
+        `;
+    } catch (error) {
+        console.error('Помилка отримання даних про погоду:', error);
+    }
+}
+
+</script>
+
+</body>
+</html>
